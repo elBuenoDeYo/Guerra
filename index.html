@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hormiga de Langton - Batalla Final</title>
+    <title>Hormiga de Langton - Batalla Final IA Orgánica</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,20 +16,17 @@
             margin: 0;
             min-height: 100vh;
         }
-
         h1 {
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             font-size: 32px;
         }
-
         .subtitle {
             font-size: 18px;
             color: #ffd700;
             margin-bottom: 20px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-
         #modeSelector {
             margin-bottom: 20px;
             display: flex;
@@ -39,7 +36,6 @@
             border-radius: 10px;
             border: 2px solid #ffd700;
         }
-
         .mode-option {
             display: flex;
             align-items: center;
@@ -51,42 +47,35 @@
             transition: all 0.3s;
             border: 2px solid transparent;
         }
-
         .mode-option:hover {
             background: rgba(255,255,255,0.2);
             transform: translateY(-2px);
         }
-
         .mode-option.selected {
             background: rgba(255,215,0,0.3);
             border-color: #ffd700;
             box-shadow: 0 0 15px rgba(255,215,0,0.5);
         }
-
         .mode-option input[type="radio"] {
             width: 20px;
             height: 20px;
             cursor: pointer;
         }
-
         .mode-label {
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
-
         .mode-title {
             font-size: 16px;
             font-weight: bold;
             color: #ffd700;
         }
-
         .mode-description {
             font-size: 12px;
             color: #aaa;
             line-height: 1.4;
         }
-
         #controls {
             margin-bottom: 20px;
             display: flex;
@@ -95,7 +84,6 @@
             justify-content: center;
             align-items: center;
         }
-
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -106,43 +94,35 @@
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
-
         #start {
             background-color: #4CAF50;
             color: white;
         }
-
         #start:hover {
             background-color: #45a049;
             transform: translateY(-2px);
         }
-
         #stop {
             background-color: #f44336;
             color: white;
         }
-
         #stop:hover {
             background-color: #da190b;
             transform: translateY(-2px);
         }
-
         #reset {
             background-color: #ff9800;
             color: white;
         }
-
         #reset:hover {
             background-color: #e68900;
             transform: translateY(-2px);
         }
-
         button:disabled {
             background-color: #555;
             cursor: not-allowed;
             transform: none;
         }
-
         #mainContainer {
             display: flex;
             gap: 20px;
@@ -151,7 +131,6 @@
             width: 100%;
             max-width: 1600px;
         }
-
         .stats-panel {
             background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(30,30,50,0.9) 100%);
             border: 3px solid #ffd700;
@@ -162,7 +141,6 @@
             max-height: 600px;
             overflow-y: auto;
         }
-
         .stats-panel h3 {
             margin: 0 0 15px 0;
             text-align: center;
@@ -171,7 +149,6 @@
             border-bottom: 2px solid rgba(255,215,0,0.3);
             padding-bottom: 10px;
         }
-
         .stat-item {
             display: flex;
             align-items: center;
@@ -183,53 +160,44 @@
             border-left: 4px solid;
             transition: all 0.3s;
         }
-
         .stat-item:hover {
             background: rgba(255,255,255,0.1);
             transform: translateX(5px);
         }
-
         .stat-item.eliminated {
             opacity: 0.6;
             background: rgba(255,255,255,0.02);
         }
-
         .stat-rank {
             font-size: 20px;
             font-weight: bold;
             width: 30px;
             text-align: center;
         }
-
         .stat-color {
             width: 20px;
             height: 20px;
             border-radius: 50%;
             border: 2px solid white;
         }
-
         .stat-name {
             flex: 1;
             font-weight: bold;
             font-size: 14px;
         }
-
         .stat-value {
             font-size: 16px;
             font-weight: bold;
             color: #4CAF50;
         }
-
         .stat-value.kills {
             color: #f44336;
         }
-
         .stat-eliminated-badge {
             font-size: 10px;
             color: #f44336;
             margin-left: 5px;
         }
-
         #canvas-container {
             border: 4px solid #ffd700;
             background-color: #fff;
@@ -237,12 +205,10 @@
             border-radius: 8px;
             overflow: hidden;
         }
-
         #canvas {
             display: block;
             background-color: white;
         }
-
         #info {
             margin-top: 20px;
             text-align: center;
@@ -252,30 +218,25 @@
             border-radius: 8px;
             line-height: 1.6;
         }
-
         #stats {
             margin-top: 15px;
             font-size: 20px;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-
         .control-group {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 5px;
         }
-
         label {
             font-size: 14px;
             font-weight: bold;
         }
-
         input[type="range"] {
             width: 150px;
         }
-
         #deathNotification {
             position: fixed;
             bottom: 20px;
@@ -292,12 +253,10 @@
             max-width: 350px;
             text-align: left;
         }
-
         #deathNotification.show {
             transform: scale(1);
             opacity: 1;
         }
-
         .death-title {
             font-size: 20px;
             font-weight: bold;
@@ -305,13 +264,11 @@
             margin-bottom: 10px;
             text-shadow: 0 0 8px rgba(244, 67, 54, 0.8);
         }
-
         .death-victim {
             font-size: 16px;
             color: #fff;
             margin-bottom: 8px;
         }
-
         .death-killer {
             font-size: 14px;
             color: #ff9800;
@@ -319,14 +276,12 @@
             padding-top: 8px;
             border-top: 2px solid rgba(255,255,255,0.2);
         }
-
         .death-icon {
             font-size: 28px;
             margin-bottom: 10px;
             display: inline-block;
             margin-right: 10px;
         }
-
         #conquestNotification {
             position: fixed;
             bottom: 20px;
@@ -343,12 +298,10 @@
             max-width: 400px;
             text-align: left;
         }
-
         #conquestNotification.show {
             transform: scale(1);
             opacity: 1;
         }
-
         .conquest-title {
             font-size: 22px;
             font-weight: bold;
@@ -356,14 +309,12 @@
             margin-bottom: 10px;
             text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
         }
-
         .conquest-message {
             font-size: 16px;
             color: #000;
             margin-bottom: 10px;
             font-weight: bold;
         }
-
         .conquest-details {
             font-size: 14px;
             color: #333;
@@ -371,23 +322,20 @@
             padding-top: 10px;
             border-top: 2px solid rgba(0,0,0,0.2);
         }
-
         .conquest-icon {
             font-size: 32px;
             margin-bottom: 12px;
             display: inline-block;
             margin-right: 10px;
         }
-
         #teamList {
             margin-top: 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 10px;
             max-width: 900px;
             width: 100%;
         }
-
         .team-card {
             background-color: rgba(0,0,0,0.3);
             padding: 10px;
@@ -395,60 +343,50 @@
             border: 3px solid;
             transition: all 0.3s;
         }
-
         .team-card.eliminated {
             opacity: 0.3;
             border-color: #666;
         }
-
         .team-card.fading {
             opacity: 0.5;
             border-color: #999;
         }
-
         .team-card.winner {
             border-color: #ffd700;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
             animation: pulse 1s infinite;
         }
-
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-
         .team-header {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 8px;
         }
-
         .team-color {
             width: 30px;
             height: 30px;
             border-radius: 50%;
             border: 2px solid white;
         }
-
         .team-name {
             font-weight: bold;
             font-size: 16px;
         }
-
         .team-stats {
             font-size: 12px;
             color: #aaa;
             margin-top: 5px;
         }
-
         .ant-status {
             display: flex;
             justify-content: space-between;
             font-size: 14px;
             margin-top: 5px;
         }
-
         .health-bar {
             width: 100%;
             height: 8px;
@@ -457,57 +395,47 @@
             overflow: hidden;
             margin-top: 3px;
         }
-
         .health-fill {
             height: 100%;
             background-color: #4CAF50;
             transition: width 0.3s;
         }
-
         .health-fill.low {
             background-color: #ff9800;
         }
-
         .health-fill.critical {
             background-color: #f44336;
         }
-
         .defense-meter {
             font-size: 11px;
             color: #ff5252;
             margin-top: 3px;
             font-weight: bold;
         }
-
         .territory-info {
             font-size: 11px;
             color: #4CAF50;
             margin-top: 3px;
         }
-
         .fading-info {
             font-size: 11px;
             color: #ff9800;
             margin-top: 3px;
             font-style: italic;
         }
-
         .threshold-info {
             font-size: 11px;
             color: #2196F3;
             margin-top: 3px;
             font-weight: bold;
         }
-
         .under-attack {
             animation: blink 0.5s infinite;
         }
-
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
-
         .rules {
             margin-top: 10px;
             font-size: 14px;
@@ -516,7 +444,6 @@
             border-radius: 5px;
             text-align: left;
         }
-
         .winner-announcement {
             position: fixed;
             top: 50%;
@@ -533,7 +460,6 @@
             display: none;
             animation: winnerAppear 0.5s;
         }
-
         @keyframes winnerAppear {
             from {
                 transform: translate(-50%, -50%) scale(0);
@@ -544,26 +470,41 @@
                 opacity: 1;
             }
         }
-
         .stats-panel::-webkit-scrollbar {
             width: 6px;
         }
-
         .stats-panel::-webkit-scrollbar-track {
             background: rgba(255,255,255,0.1);
             border-radius: 3px;
         }
-
         .stats-panel::-webkit-scrollbar-thumb {
             background: rgba(255,215,0,0.5);
             border-radius: 3px;
         }
+        .role-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .role-explorer { background-color: #2196F3; color: white; }
+        .role-defender { background-color: #4CAF50; color: white; }
+        .role-aggressor { background-color: #f44336; color: white; }
+        .role-healer { background-color: #ff9800; color: white; }
+        .chaos-indicator {
+            font-size: 11px;
+            color: #9c27b0;
+            margin-top: 3px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
-    <h1>⚔️ Hormiga de Langton - Batalla Final ⚔️</h1>
-    <div class="subtitle">10 Equipos • Umbral Dinámico • ¡Elige tu modo de juego!</div>
-    
+    <h1>⚔️ Hormiga de Langton - Batalla Final IA Orgánica ⚔️</h1>
+    <div class="subtitle">10 Equipos • IA Estratégica Caótica • Expansión Natural • ¡Elige tu modo de juego!</div>
+
     <div id="modeSelector">
         <div class="mode-option selected" id="modeClassic">
             <input type="radio" name="gameMode" value="classic" checked>
@@ -585,22 +526,22 @@
         <button id="start">▶️ Iniciar Batalla</button>
         <button id="stop" disabled>⏸️ Pausar</button>
         <button id="reset">🔄 Nueva Batalla</button>
-        
         <div class="control-group">
             <label>Velocidad: <span id="speedValue">80</span> pasos/seg</label>
-            <input type="range" id="speed" min="20" max="400" value="80">
+            <input type="range" id="speed" min="20" max="1500" value="80">
         </div>
-        
         <div class="control-group">
             <label>Tamaño celda: <span id="cellSizeValue">3</span>px</label>
             <input type="range" id="cellSize" min="2" max="6" value="3">
         </div>
-
         <div class="control-group">
             <label>Umbral base: <span id="thresholdValue">30</span> celdas</label>
             <input type="range" id="threshold" min="10" max="60" value="30">
         </div>
-
+        <div class="control-group">
+            <label>Factor de caos: <span id="chaosValue">35</span>%</label>
+            <input type="range" id="chaos" min="0" max="100" value="35">
+        </div>
         <div class="control-group" id="fadeSpeedControl">
             <label>Velocidad desvanecimiento: <span id="fadeSpeedValue">5</span>%</label>
             <input type="range" id="fadeSpeed" min="1" max="15" value="5">
@@ -622,7 +563,7 @@
             <div id="killStats"></div>
         </div>
     </div>
-    
+
     <div id="stats">
         Pasos: 0 | Equipos vivos: 10 | Hormigas vivas: 20
     </div>
@@ -648,23 +589,52 @@
     </div>
 
     <div id="info">
-        <strong>⚔️ Sistema de Batalla con Modos de Juego:</strong>
+        <strong>⚔️ Sistema de Batalla con IA Estratégica Orgánica:</strong>
         <div class="rules" id="rulesText">
+            <strong>📋 REGLAS BÁSICAS:</strong><br>
             • Cada equipo tiene 2 hormigas del mismo color<br>
-            • <strong>CONQUISTA:</strong> Borrar celdas enemigas es SEGURO y beneficioso<br>
-            • <strong>DEFENSA:</strong> Cuando un enemigo borra TUS celdas, tu equipo sufre daño<br>
+            • Las hormigas siguen el patrón de Langton: giran 90° derecha en celda vacía, 90° izquierda en celda pintada<br>
+            • Objetivo: Ser el último equipo con hormigas vivas<br><br>
+
+            <strong>⚔️ SISTEMA DE COMBATE:</strong><br>
+            • <strong>CONQUISTA:</strong> Borrar celdas enemigas es SEGURO y beneficioso (+1 punto de conquista)<br>
+            • <strong>DEFENSA:</strong> Cuando un enemigo borra TUS celdas, tu equipo sufre daño acumulado<br>
             • <strong>UMBRAL DINÁMICO:</strong> Más territorio = mayor resistencia al daño<br>
-            • Umbral base: <span id="thresholdDisplay">30</span> celdas + bonificación por territorio<br>
-            • <strong>CURACIÓN:</strong> Borrar 10 celdas propias reduce 1 punto del daño acumulado<br>
-            • <strong id="modeSpecificRule">MODO CLÁSICO:</strong> <span id="modeSpecificText">El territorio de equipos eliminados se desvanece</span><br>
-            • El último equipo con hormigas vivas gana la batalla
+            • Umbral base: <span id="thresholdDisplay">30</span> celdas + bonificación (1% del territorio actual)<br>
+            • Al alcanzar el umbral: una hormiga aleatoria pierde 1 vida (10 vidas máximo)<br>
+            • <strong>CURACIÓN:</strong> Borrar 25 celdas propias reduce 1 punto del daño acumulado<br><br>
+
+            <strong>🧠 SISTEMA DE IA ESTRATÉGICA ORGÁNICA (NUEVO):</strong><br>
+            • <strong>COMPORTAMIENTO HÍBRIDO:</strong> Mezcla de Langton clásico + estrategia inteligente<br>
+            • <strong>FACTOR DE CAOS:</strong> <span id="chaosDisplay">35</span>% de probabilidad de ignorar estrategia y actuar caóticamente<br>
+            • <strong>ESTRATEGIA SITUACIONAL:</strong> Solo actúan estratégicamente en situaciones críticas:<br>
+            &nbsp;&nbsp;- Vida baja (< 40%)<br>
+            &nbsp;&nbsp;- Equipo bajo ataque severo (> 60% del umbral)<br>
+            &nbsp;&nbsp;- Territorio muy reducido<br>
+            • <strong>ROLES DINÁMICOS:</strong> Las hormigas cambian de rol según la situación:<br>
+            &nbsp;&nbsp;🔵 <strong>EXPLORADOR:</strong> Expande territorio en zonas vacías<br>
+            &nbsp;&nbsp;🟢 <strong>DEFENSOR:</strong> Protege el centro del territorio propio<br>
+            &nbsp;&nbsp;🔴 <strong>AGRESOR:</strong> Busca y ataca territorio enemigo cercano<br>
+            &nbsp;&nbsp;🟠 <strong>SANADOR:</strong> Borra territorio propio para curar al equipo<br>
+            • <strong>VISIÓN LIMITADA:</strong> Radio de 3 celdas (comportamiento más orgánico)<br>
+            • <strong>INERCIA DE MOVIMIENTO:</strong> 40% de probabilidad de mantener dirección actual<br>
+            • <strong>COORDINACIÓN:</strong> Las 2 hormigas coordinan roles en situaciones críticas<br>
+            • <strong>MEMORIA:</strong> Detectan si están atascadas y cambian de dirección<br><br>
+
+            <strong>🎮 MODOS DE JUEGO:</strong><br>
+            • <strong id="modeSpecificRule">MODO CLÁSICO:</strong> <span id="modeSpecificText">El territorio de equipos eliminados se desvanece gradualmente</span><br>
+            • <strong>MODO CONQUISTA TOTAL:</strong> Al eliminar un equipo, conquistas instantáneamente todo su territorio<br><br>
+
+            <strong>🏆 VICTORIA:</strong><br>
+            • El último equipo con hormigas vivas gana la batalla<br>
+            • Las hormigas combinan expansión caótica con estrategia inteligente para sobrevivir
         </div>
     </div>
 
     <div id="winnerAnnouncement" class="winner-announcement"></div>
 
     <script>
-        // Configuración
+        // ==================== CONFIGURACIÓN ====================
         let CELL_SIZE = 3;
         const GRID_WIDTH = 300;
         const GRID_HEIGHT = 200;
@@ -676,14 +646,31 @@
         const FADE_INTERVAL = 20;
         const TERRITORY_BONUS_FACTOR = 0.01;
         const HEALING_THRESHOLD = 25;
-        
+        const VISION_RADIUS = 5; // Reducido para comportamiento más orgánico
+        let CHAOS_FACTOR = 35; // Nuevo: factor de caos (0-100)
+        const INERTIA_FACTOR = 0.4; // Probabilidad de mantener dirección
         let GAME_MODE = 'classic';
-        
+
+        // Roles de las hormigas
+        const ANT_ROLES = {
+            EXPLORER: 'explorer',
+            DEFENDER: 'defender',
+            AGGRESSOR: 'aggressor',
+            HEALER: 'healer'
+        };
+
+        const ROLE_NAMES = {
+            explorer: '🔵 Explorador',
+            defender: '🟢 Defensor',
+            aggressor: '🔴 Agresor',
+            healer: '🟠 Sanador'
+        };
+
         const DIRECTIONS = [
-            {dx: 0, dy: -1},
-            {dx: 1, dy: 0},
-            {dx: 0, dy: 1},
-            {dx: -1, dy: 0}
+            { dx: 0, dy: -1 },  // Norte
+            { dx: 1, dy: 0 },   // Este
+            { dx: 0, dy: 1 },   // Sur
+            { dx: -1, dy: 0 }   // Oeste
         ];
 
         const TEAM_COLORS = [
@@ -696,7 +683,7 @@
             'Cianes', 'Naranjas', 'Púrpuras', 'Turquesas', 'Rosas'
         ];
 
-        // Elementos del DOM
+        // ==================== ELEMENTOS DOM ====================
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const startBtn = document.getElementById('start');
@@ -710,6 +697,9 @@
         const thresholdSlider = document.getElementById('threshold');
         const thresholdValue = document.getElementById('thresholdValue');
         const thresholdDisplay = document.getElementById('thresholdDisplay');
+        const chaosSlider = document.getElementById('chaos');
+        const chaosValue = document.getElementById('chaosValue');
+        const chaosDisplay = document.getElementById('chaosDisplay');
         const fadeSpeedSlider = document.getElementById('fadeSpeed');
         const fadeSpeedValue = document.getElementById('fadeSpeedValue');
         const fadeSpeedControl = document.getElementById('fadeSpeedControl');
@@ -728,7 +718,7 @@
         const modeSpecificRule = document.getElementById('modeSpecificRule');
         const modeSpecificText = document.getElementById('modeSpecificText');
 
-        // Estado del juego
+        // ==================== ESTADO DEL JUEGO ====================
         let grid = [];
         let teams = [];
         let ants = [];
@@ -737,48 +727,323 @@
         let steps = 0;
         let battleEnded = false;
 
-        // Event listeners para selector de modo
-        modeClassicDiv.addEventListener('click', () => {
-            if (!isRunning) {
-                GAME_MODE = 'classic';
-                modeClassicDiv.classList.add('selected');
-                modeConquestDiv.classList.remove('selected');
-                modeClassicDiv.querySelector('input').checked = true;
-                fadeSpeedControl.style.display = 'flex';
-                updateModeDescription();
-            }
-        });
+        // ==================== FUNCIONES DE IA ====================
 
-        modeConquestDiv.addEventListener('click', () => {
-            if (!isRunning) {
-                GAME_MODE = 'conquest';
-                modeConquestDiv.classList.add('selected');
-                modeClassicDiv.classList.remove('selected');
-                modeConquestDiv.querySelector('input').checked = true;
-                fadeSpeedControl.style.display = 'none';
-                updateModeDescription();
-            }
-        });
-
-        function updateModeDescription() {
-            if (GAME_MODE === 'classic') {
-                modeSpecificRule.textContent = 'MODO CLÁSICO:';
-                modeSpecificText.textContent = 'El territorio de equipos eliminados se desvanece gradualmente';
-            } else {
-                modeSpecificRule.textContent = 'MODO CONQUISTA TOTAL:';
-                modeSpecificText.textContent = 'Al eliminar un equipo, conquistas todo su territorio instantáneamente';
-            }
-        }
-
+        // Calcular umbral dinámico
         function calculateDynamicThreshold(territoryCells) {
             const bonus = Math.floor(territoryCells * TERRITORY_BONUS_FACTOR);
             return BASE_DAMAGE_THRESHOLD + bonus;
         }
 
+        // Determinar si debe usar estrategia (solo en situaciones críticas)
+        function shouldUseStrategy(ant, team) {
+            const healthPercent = ant.health / MAX_HEALTH;
+            const damagePercent = team.territoryLostCounter / calculateDynamicThreshold(team.territoryCells);
+            const avgTerritory = teams.filter(t => t.alive).reduce((sum, t) => sum + t.territoryCells, 0) / 
+                                teams.filter(t => t.alive).length;
+            
+            // Solo usar estrategia si:
+            // - La hormiga tiene poca vida (< 40%)
+            // - El equipo está bajo ataque severo (> 60% del umbral)
+            // - El equipo tiene muy poco territorio
+            return healthPercent < 0.6 || 
+                   damagePercent > 0.8;
+        }
+
+        // Analizar entorno de la hormiga
+        function analyzeEnvironment(ant) {
+            let threats = [];
+            let opportunities = [];
+            let ownTerritory = [];
+            
+            for (let dy = -VISION_RADIUS; dy <= VISION_RADIUS; dy++) {
+                for (let dx = -VISION_RADIUS; dx <= VISION_RADIUS; dx++) {
+                    const x = (ant.x + dx + GRID_WIDTH) % GRID_WIDTH;
+                    const y = (ant.y + dy + GRID_HEIGHT) % GRID_HEIGHT;
+                    const cell = grid[y][x];
+                    const distance = Math.abs(dx) + Math.abs(dy);
+                    
+                    if (cell !== 0 && cell !== ant.teamId) {
+                        const enemyTeam = teams[cell - 1];
+                        if (enemyTeam.alive) {
+                            threats.push({ x, y, distance, teamId: cell, priority: 1 / (distance + 1) });
+                        }
+                    } else if (cell === ant.teamId) {
+                        ownTerritory.push({ x, y, distance });
+                    } else if (cell === 0) {
+                        opportunities.push({ x, y, distance });
+                    }
+                }
+            }
+            
+            return { threats, opportunities, ownTerritory };
+        }
+
+        // Calcular centro del territorio de un equipo
+        function calculateTerritoryCenter(team) {
+            let sumX = 0, sumY = 0, count = 0;
+            
+            for (let y = 0; y < GRID_HEIGHT; y++) {
+                for (let x = 0; x < GRID_WIDTH; x++) {
+                    if (grid[y][x] === team.id) {
+                        sumX += x;
+                        sumY += y;
+                        count++;
+                    }
+                }
+            }
+            
+            if (count === 0) return { x: GRID_WIDTH / 2, y: GRID_HEIGHT / 2 };
+            return { x: Math.floor(sumX / count), y: Math.floor(sumY / count) };
+        }
+
+        // Asignar rol a una hormiga según el contexto
+        function assignRole(ant, team) {
+            const healthPercent = ant.health / MAX_HEALTH;
+            const damagePercent = team.territoryLostCounter / calculateDynamicThreshold(team.territoryCells);
+            const avgTerritory = teams.filter(t => t.alive).reduce((sum, t) => sum + t.territoryCells, 0) / 
+                                teams.filter(t => t.alive).length;
+            
+            // Prioridad 1: Curar si el equipo está muy dañado
+            if (damagePercent > 0.85 && team.selfErasedCounter < HEALING_THRESHOLD * 0.8) {
+                return ANT_ROLES.HEALER;
+            }
+            
+            
+            // Por defecto: Atacar
+            return ANT_ROLES.AGGRESSOR;
+        }
+
+        // Coordinar roles entre hormigas del mismo equipo
+        function coordinateTeam(team) {
+            const teamAnts = ants.filter(a => a.teamId === team.id && a.alive);
+            
+            if (teamAnts.length === 2) {
+                const ant1 = teamAnts[0];
+                const ant2 = teamAnts[1];
+                const damagePercent = team.territoryLostCounter / calculateDynamicThreshold(team.territoryCells);
+                
+                // Solo coordinar en situaciones críticas
+                if (damagePercent > 0.85) {
+                    // Bajo ataque: una cura, otra defiende
+                    ant1.assignedRole = ANT_ROLES.HEALER;
+                } else {
+                    // Situación normal: dejar que actúen libremente
+                    ant1.assignedRole = null;
+                    ant2.assignedRole = null;
+                }
+            } else if (teamAnts.length === 1) {
+                // Solo queda una: rol según situación
+                teamAnts[0].assignedRole = null; // Dejar que decida por sí misma
+            }
+        }
+
+        // Mover hormiga hacia un objetivo (con inercia)
+        function moveTowards(ant, targetX, targetY) {
+            // Inercia: probabilidad de mantener dirección actual
+            if (Math.random() < INERTIA_FACTOR) {
+                return; // No cambiar dirección
+            }
+            
+            const dx = targetX - ant.x;
+            const dy = targetY - ant.y;
+            
+            // Normalizar diferencias considerando el wrap-around
+            const normalizedDx = Math.abs(dx) > GRID_WIDTH / 2 ? -Math.sign(dx) : Math.sign(dx);
+            const normalizedDy = Math.abs(dy) > GRID_HEIGHT / 2 ? -Math.sign(dy) : Math.sign(dy);
+            
+            // Determinar mejor dirección
+            let newDirection;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                newDirection = normalizedDx > 0 ? 1 : 3; // Este u Oeste
+            } else {
+                newDirection = normalizedDy > 0 ? 2 : 0; // Sur o Norte
+            }
+            
+            ant.preferredDirection = newDirection;
+        }
+
+        // Actualizar memoria de la hormiga
+        function updateMemory(ant) {
+            ant.memory.lastPositions.push({ x: ant.x, y: ant.y });
+            
+            if (ant.memory.lastPositions.length > 10) {
+                ant.memory.lastPositions.shift();
+                
+                const uniquePositions = new Set(
+                    ant.memory.lastPositions.map(p => `${p.x},${p.y}`)
+                );
+                
+                // Detectar si está atascada
+                if (uniquePositions.size < 3) {
+                    ant.memory.stuckCounter++;
+                    if (ant.memory.stuckCounter > 5) {
+                        // Cambiar dirección aleatoriamente
+                        ant.direction = Math.floor(Math.random() * 4);
+                        ant.memory.stuckCounter = 0;
+                        ant.memory.lastPositions = [];
+                    }
+                } else {
+                    ant.memory.stuckCounter = 0;
+                }
+            }
+        }
+
+        // ==================== ACTUALIZACIÓN INTELIGENTE DE HORMIGA ====================
+        function updateAntIntelligent(ant) {
+            if (!ant.alive) return;
+            
+            const team = teams[ant.teamId - 1];
+            ant.isUsingStrategy = false;
+            
+            // Solo aplicar estrategia en situaciones críticas
+            if (shouldUseStrategy(ant, team)) {
+                const environment = analyzeEnvironment(ant);
+                const role = ant.assignedRole || assignRole(ant, team);
+                ant.currentRole = role;
+                ant.isUsingStrategy = true;
+                
+                // Aplicar comportamiento estratégico
+                switch(role) {
+                    case ANT_ROLES.HEALER:
+                        if (environment.ownTerritory.length > 0) {
+                            const target = environment.ownTerritory
+                                .sort((a, b) => a.distance - b.distance)[0];
+                            moveTowards(ant, target.x, target.y);
+                        }
+                        break;
+                        
+                    case ANT_ROLES.AGGRESSOR:
+                        if (environment.threats.length > 0) {
+                            const target = environment.threats
+                                .sort((a, b) => b.priority - a.priority)[0];
+                            moveTowards(ant, target.x, target.y);
+                        } else {
+                            ant.role = ANT_ROLES.EXPLORER;
+                        }
+                        break;
+                        
+                    case ANT_ROLES.DEFENDER:
+                        const center = calculateTerritoryCenter(team);
+                        moveTowards(ant, center.x, center.y);
+                        break;
+                        
+                    case ANT_ROLES.EXPLORER:
+                        if (environment.opportunities.length > 0) {
+                            const target = environment.opportunities
+                                .sort((a, b) => a.distance - b.distance)[0];
+                            moveTowards(ant, target.x, target.y);
+                        }
+                        break;
+                }
+            } else {
+                // Comportamiento normal de Langton (caótico)
+                ant.currentRole = null;
+                ant.preferredDirection = undefined;
+            }
+            
+            updateMemory(ant);
+            executeHybridMove(ant);
+        }
+
+        // Ejecutar movimiento híbrido (Langton + Estrategia + Caos)
+        function executeHybridMove(ant) {
+            const currentCell = grid[ant.y][ant.x];
+            
+            if (currentCell === 0) {
+                // Celda vacía: mezclar estrategia con Langton y caos
+                const randomValue = Math.random() * 100;
+                
+                if (randomValue < CHAOS_FACTOR) {
+                    // Factor de caos: comportamiento completamente aleatorio
+                    ant.direction = (ant.direction + 1) % 4;
+                } else if (ant.preferredDirection !== undefined && Math.random() < 0.5) {
+                    // 50% usar estrategia (si está disponible)
+                    ant.direction = ant.preferredDirection;
+                } else {
+                    // 50% usar Langton clásico
+                    ant.direction = (ant.direction + 1) % 4;
+                }
+                
+                ant.preferredDirection = undefined;
+                grid[ant.y][ant.x] = ant.teamId;
+            } else {
+                // Celda pintada: SIEMPRE Langton (girar izquierda)
+                ant.direction = (ant.direction + 3) % 4;
+                
+                if (currentCell === ant.teamId) {
+                    // Borrar celda propia
+                    const myTeam = teams[ant.teamId - 1];
+                    myTeam.selfErasedCounter++;
+                    
+                    if (myTeam.selfErasedCounter >= HEALING_THRESHOLD) {
+                        myTeam.selfErasedCounter = 0;
+                        if (myTeam.territoryLostCounter > 0) {
+                            myTeam.territoryLostCounter = Math.max(0, myTeam.territoryLostCounter - 1);
+                        }
+                    }
+                } else if (currentCell !== ant.teamId) {
+                    // Borrar celda enemiga
+                    const enemyTeam = teams[currentCell - 1];
+                    const attackerTeam = teams[ant.teamId - 1];
+                    
+                    if (enemyTeam.alive) {
+                        enemyTeam.territoryLostCounter++;
+                        enemyTeam.totalTerritoryLost++;
+                        enemyTeam.territoryLostToEnemies++;
+                        enemyTeam.underAttack = true;
+                        ant.cellsConquered++;
+                        
+                        const dynamicThreshold = calculateDynamicThreshold(enemyTeam.territoryCells);
+                        
+                        if (enemyTeam.territoryLostCounter >= dynamicThreshold) {
+                            enemyTeam.territoryLostCounter = 0;
+                            const aliveAnts = ants.filter(a => a.teamId === enemyTeam.id && a.alive);
+                            
+                            if (aliveAnts.length > 0) {
+                                const targetAnt = aliveAnts[Math.floor(Math.random() * aliveAnts.length)];
+                                targetAnt.lastAttacker = attackerTeam.id;
+                                targetAnt.health--;
+                                
+                                if (targetAnt.health <= 0) {
+                                    targetAnt.alive = false;
+                                    targetAnt.health = 0;
+                                    attackerTeam.killCount++;
+                                    showDeathNotification(enemyTeam, attackerTeam);
+                                    
+                                    enemyTeam.antsAlive--;
+                                    if (enemyTeam.antsAlive <= 0) {
+                                        enemyTeam.alive = false;
+                                        if (enemyTeam.territoryCells > enemyTeam.maxTerritoryCells) {
+                                            enemyTeam.maxTerritoryCells = enemyTeam.territoryCells;
+                                        }
+                                        
+                                        if (GAME_MODE === 'conquest') {
+                                            const cellsConverted = convertEnemyTerritory(enemyTeam.id, attackerTeam.id);
+                                            attackerTeam.territoriesConquered++;
+                                            updateTerritoryCounts();
+                                            showConquestNotification(attackerTeam, enemyTeam, cellsConverted);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                grid[ant.y][ant.x] = 0;
+            }
+            
+            // Mover hormiga
+            const dir = DIRECTIONS[ant.direction];
+            ant.x = (ant.x + dir.dx + GRID_WIDTH) % GRID_WIDTH;
+            ant.y = (ant.y + dir.dy + GRID_HEIGHT) % GRID_HEIGHT;
+        }
+
+        // ==================== FUNCIONES DE NOTIFICACIÓN ====================
         function showDeathNotification(victimTeam, killerTeam) {
             deathVictim.innerHTML = `<span style="color: ${victimTeam.color}">⚰️ ${victimTeam.name}</span> han perdido una hormiga`;
             deathKiller.innerHTML = `⚔️ Eliminada por <span style="color: ${killerTeam.color}">${killerTeam.name}</span>`;
-            
             deathNotification.classList.add('show');
             
             setTimeout(() => {
@@ -789,7 +1054,6 @@
         function showConquestNotification(conquerorTeam, defeatedTeam, territoryCaptured) {
             conquestMessage.innerHTML = `<span style="color: ${conquerorTeam.color}">${conquerorTeam.name}</span> han conquistado a <span style="color: ${defeatedTeam.color}">${defeatedTeam.name}</span>!`;
             conquestDetails.innerHTML = `🗺️ +${territoryCaptured} celdas conquistadas<br>👑 ¡Imperio en expansión!`;
-            
             conquestNotification.classList.add('show');
             
             setTimeout(() => {
@@ -797,6 +1061,7 @@
             }, 4000);
         }
 
+        // ==================== FUNCIONES DE TERRITORIO ====================
         function convertEnemyTerritory(defeatedTeamId, conquerorTeamId) {
             let cellsConverted = 0;
             
@@ -812,11 +1077,62 @@
             return cellsConverted;
         }
 
-        function updateStatsPanels() {
-            const territorySorted = [...teams]
-                .sort((a, b) => b.maxTerritoryCells - a.maxTerritoryCells);
+        function fadeDeadTerritory() {
+            if (GAME_MODE !== 'classic') return;
             
+            const deadTeams = teams.filter(t => !t.alive);
+            
+            deadTeams.forEach(team => {
+                team.isFading = true;
+                const teamCells = [];
+                
+                for (let y = 0; y < GRID_HEIGHT; y++) {
+                    for (let x = 0; x < GRID_WIDTH; x++) {
+                        if (grid[y][x] === team.id) {
+                            teamCells.push({ x, y });
+                        }
+                    }
+                }
+                
+                const cellsToFade = Math.max(1, Math.floor(teamCells.length * (FADE_SPEED / 100)));
+                
+                for (let i = 0; i < cellsToFade && teamCells.length > 0; i++) {
+                    const randomIndex = Math.floor(Math.random() * teamCells.length);
+                    const cell = teamCells[randomIndex];
+                    grid[cell.y][cell.x] = 0;
+                    teamCells.splice(randomIndex, 1);
+                }
+            });
+        }
+
+        function updateTerritoryCounts() {
+            teams.forEach(team => {
+                team.territoryCells = 0;
+                team.underAttack = false;
+            });
+            
+            for (let y = 0; y < GRID_HEIGHT; y++) {
+                for (let x = 0; x < GRID_WIDTH; x++) {
+                    const cellValue = grid[y][x];
+                    if (cellValue > 0) {
+                        teams[cellValue - 1].territoryCells++;
+                    }
+                }
+            }
+            
+            teams.forEach(team => {
+                if (team.alive && team.territoryCells > team.maxTerritoryCells) {
+                    team.maxTerritoryCells = team.territoryCells;
+                }
+            });
+        }
+
+        // ==================== FUNCIONES DE VISUALIZACIÓN ====================
+        function updateStatsPanels() {
+            // Panel de territorio
+            const territorySorted = [...teams].sort((a, b) => b.maxTerritoryCells - a.maxTerritoryCells);
             territoryStatsDiv.innerHTML = '';
+            
             territorySorted.forEach((team, index) => {
                 const item = document.createElement('div');
                 item.className = 'stat-item';
@@ -844,11 +1160,11 @@
                 
                 territoryStatsDiv.appendChild(item);
             });
-
-            const killsSorted = [...teams]
-                .sort((a, b) => b.killCount - a.killCount);
             
+            // Panel de muertes
+            const killsSorted = [...teams].sort((a, b) => b.killCount - a.killCount);
             killStatsDiv.innerHTML = '';
+            
             killsSorted.forEach((team, index) => {
                 const item = document.createElement('div');
                 item.className = 'stat-item';
@@ -878,6 +1194,185 @@
             });
         }
 
+        function updateTeamList() {
+            teamListDiv.innerHTML = '';
+            
+            teams.forEach(team => {
+                const card = document.createElement('div');
+                card.className = 'team-card';
+                card.style.borderColor = team.color;
+                
+                if (!team.alive) {
+                    if (team.isFading && team.territoryCells > 0) {
+                        card.classList.add('fading');
+                    } else {
+                        card.classList.add('eliminated');
+                    }
+                }
+                
+                const aliveTeams = teams.filter(t => t.alive).length;
+                if (team.alive && aliveTeams === 1) {
+                    card.classList.add('winner');
+                }
+                
+                const teamAnts = ants.filter(a => a.teamId === team.id);
+                let territoryDisplay = '';
+                
+                if (team.alive) {
+                    territoryDisplay = `🗺️ Territorio: ${team.territoryCells} celdas`;
+                } else {
+                    territoryDisplay = `🗺️ Territorio máximo: ${team.maxTerritoryCells} celdas`;
+                }
+                
+                const currentThreshold = team.alive ? 
+                    calculateDynamicThreshold(team.territoryCells) : 
+                    calculateDynamicThreshold(team.maxTerritoryCells);
+                
+                let html = `
+                    <div class="team-header">
+                        <div class="team-color" style="background-color: ${team.color}"></div>
+                        <div class="team-name">${team.name}</div>
+                    </div>
+                    <div style="font-size: 12px; color: ${team.alive ? '#4CAF50' : '#f44336'}">
+                        ${team.alive ? '✓ Activo' : '✗ Eliminado'}
+                    </div>
+                    <div class="team-stats">
+                        ${territoryDisplay} | 💀 Muertes: ${team.killCount}
+                    </div>
+                    <div class="threshold-info">
+                        🛡️ Umbral actual: ${currentThreshold} celdas
+                    </div>
+                    ${team.selfErasedCounter > 0 && team.alive ? `
+                        <div class="territory-info" style="color: #4CAF50;">
+                            💚 Auto-curación: ${team.selfErasedCounter}/${HEALING_THRESHOLD} (${Math.floor((team.selfErasedCounter / HEALING_THRESHOLD) * 100)}%)
+                        </div>
+                    ` : ''}
+                    ${team.territoriesConquered > 0 ? `
+                        <div class="team-stats" style="color: #ffd700;">
+                            👑 Territorios conquistados: ${team.territoriesConquered}
+                        </div>
+                    ` : ''}
+                    ${team.territoryLostToEnemies > 0 ? `
+                        <div class="team-stats" style="color: #f44336;">
+                            ⚔️ Perdido por conquista: ${team.territoryLostToEnemies} celdas
+                        </div>
+                    ` : ''}
+                    ${team.isFading && team.territoryCells > 0 && GAME_MODE === 'classic' ? `
+                        <div class="fading-info">
+                            💨 Desvaneciéndose... (${team.territoryCells} restantes)
+                        </div>
+                    ` : ''}
+                    ${team.territoryLostCounter > 0 && team.alive ? `
+                        <div class="defense-meter ${team.underAttack ? 'under-attack' : ''}">
+                            🛡️ Bajo ataque: ${team.territoryLostCounter}/${currentThreshold} (${Math.floor((team.territoryLostCounter / currentThreshold) * 100)}%)
+                        </div>
+                    ` : ''}
+                `;
+                
+                teamAnts.forEach((ant, index) => {
+                    const healthPercent = (ant.health / MAX_HEALTH) * 100;
+                    let healthClass = '';
+                    if (healthPercent <= 30) healthClass = 'critical';
+                    else if (healthPercent <= 60) healthClass = 'low';
+                    
+                    const roleName = ant.currentRole ? ROLE_NAMES[ant.currentRole] : '';
+                    const roleClass = ant.currentRole ? `role-${ant.currentRole}` : '';
+                    const behaviorMode = ant.isUsingStrategy ? '🧠 Estratégico' : '🌀 Caótico';
+                    
+                    html += `
+                        <div class="ant-status">
+                            <span>Hormiga ${index + 1}:${ant.alive && roleName ? `<span class="role-badge ${roleClass}">${roleName}</span>` : ''}</span>
+                            <span>${ant.alive ? `❤️ ${ant.health}/${MAX_HEALTH}` : '💀 Muerta'}</span>
+                        </div>
+                        <div class="health-bar">
+                            <div class="health-fill ${healthClass}" style="width: ${ant.alive ? healthPercent : 0}%"></div>
+                        </div>
+                        ${ant.alive ? `
+                            <div class="territory-info">
+                                ⚔️ Conquistadas: ${ant.cellsConquered}
+                            </div>
+                            <div class="chaos-indicator">
+                                ${behaviorMode}
+                            </div>
+                        ` : ''}
+                    `;
+                });
+                
+                card.innerHTML = html;
+                teamListDiv.appendChild(card);
+            });
+        }
+
+        function draw() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Dibujar celdas
+            for (let y = 0; y < GRID_HEIGHT; y++) {
+                for (let x = 0; x < GRID_WIDTH; x++) {
+                    const cellValue = grid[y][x];
+                    if (cellValue > 0) {
+                        const team = teams[cellValue - 1];
+                        if (!team.alive && team.isFading && GAME_MODE === 'classic') {
+                            ctx.globalAlpha = 0.5;
+                        }
+                        ctx.fillStyle = TEAM_COLORS[cellValue - 1];
+                        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                        ctx.globalAlpha = 1.0;
+                    }
+                }
+            }
+            
+            // Dibujar hormigas
+            ants.filter(ant => ant.alive).forEach(ant => {
+                ctx.fillStyle = ant.color;
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(
+                    ant.x * CELL_SIZE + CELL_SIZE / 2,
+                    ant.y * CELL_SIZE + CELL_SIZE / 2,
+                    CELL_SIZE * 0.8,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.fill();
+                ctx.stroke();
+                
+                // Indicador de salud
+                const healthPercent = ant.health / MAX_HEALTH;
+                ctx.strokeStyle = healthPercent > 0.6 ? '#4CAF50' : 
+                                 healthPercent > 0.3 ? '#ff9800' : '#f44336';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(
+                    ant.x * CELL_SIZE + CELL_SIZE / 2,
+                    ant.y * CELL_SIZE + CELL_SIZE / 2,
+                    CELL_SIZE * 1.2,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.stroke();
+                
+                // Indicador de ataque
+                const team = teams[ant.teamId - 1];
+                if (team.underAttack) {
+                    ctx.strokeStyle = 'rgba(255, 0, 0, 0.6)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(
+                        ant.x * CELL_SIZE + CELL_SIZE / 2,
+                        ant.y * CELL_SIZE + CELL_SIZE / 2,
+                        CELL_SIZE * 1.6,
+                        0,
+                        Math.PI * 2
+                    );
+                    ctx.stroke();
+                }
+            });
+        }
+
+        // ==================== FUNCIONES DE JUEGO ====================
         function initCanvas() {
             canvas.width = GRID_WIDTH * CELL_SIZE;
             canvas.height = GRID_HEIGHT * CELL_SIZE;
@@ -890,7 +1385,7 @@
         function createTeamsAndAnts() {
             teams = [];
             ants = [];
-
+            
             for (let i = 0; i < NUM_TEAMS; i++) {
                 const team = {
                     id: i + 1,
@@ -910,7 +1405,7 @@
                     territoriesConquered: 0
                 };
                 teams.push(team);
-
+                
                 for (let j = 0; j < ANTS_PER_TEAM; j++) {
                     const ant = {
                         id: ants.length,
@@ -923,337 +1418,32 @@
                         alive: true,
                         cellsConquered: 0,
                         cellsDefended: 0,
-                        lastAttacker: null
+                        lastAttacker: null,
+                        currentRole: null,
+                        assignedRole: null,
+                        preferredDirection: undefined,
+                        isUsingStrategy: false,
+                        memory: {
+                            dangerZones: [],
+                            productiveZones: [],
+                            lastPositions: [],
+                            stuckCounter: 0
+                        }
                     };
                     ants.push(ant);
                 }
             }
         }
 
-        function fadeDeadTerritory() {
-            if (GAME_MODE !== 'classic') return;
-            
-            const deadTeams = teams.filter(t => !t.alive);
-            
-            deadTeams.forEach(team => {
-                team.isFading = true;
-                
-                const teamCells = [];
-                for (let y = 0; y < GRID_HEIGHT; y++) {
-                    for (let x = 0; x < GRID_WIDTH; x++) {
-                        if (grid[y][x] === team.id) {
-                            teamCells.push({x, y});
-                        }
-                    }
-                }
-
-                const cellsToFade = Math.max(1, Math.floor(teamCells.length * (FADE_SPEED / 100)));
-                
-                for (let i = 0; i < cellsToFade && teamCells.length > 0; i++) {
-                    const randomIndex = Math.floor(Math.random() * teamCells.length);
-                    const cell = teamCells[randomIndex];
-                    grid[cell.y][cell.x] = 0;
-                    teamCells.splice(randomIndex, 1);
-                }
-            });
-        }
-
-        function updateTerritoryCounts() {
-            teams.forEach(team => {
-                team.territoryCells = 0;
-                team.underAttack = false;
-            });
-
-            for (let y = 0; y < GRID_HEIGHT; y++) {
-                for (let x = 0; x < GRID_WIDTH; x++) {
-                    const cellValue = grid[y][x];
-                    if (cellValue > 0) {
-                        teams[cellValue - 1].territoryCells++;
-                    }
-                }
-            }
-
-            teams.forEach(team => {
-                if (team.alive && team.territoryCells > team.maxTerritoryCells) {
-                    team.maxTerritoryCells = team.territoryCells;
-                }
-            });
-        }
-
-        function updateTeamList() {
-            teamListDiv.innerHTML = '';
-            teams.forEach(team => {
-                const card = document.createElement('div');
-                card.className = 'team-card';
-                card.style.borderColor = team.color;
-                
-                if (!team.alive) {
-                    if (team.isFading && team.territoryCells > 0) {
-                        card.classList.add('fading');
-                    } else {
-                        card.classList.add('eliminated');
-                    }
-                }
-
-                const aliveTeams = teams.filter(t => t.alive).length;
-                if (team.alive && aliveTeams === 1) {
-                    card.classList.add('winner');
-                }
-
-                const teamAnts = ants.filter(a => a.teamId === team.id);
-                
-                let territoryDisplay = '';
-                if (team.alive) {
-                    territoryDisplay = `🗺️ Territorio: ${team.territoryCells} celdas`;
-                } else {
-                    territoryDisplay = `🗺️ Territorio máximo: ${team.maxTerritoryCells} celdas`;
-                }
-                
-                const currentThreshold = team.alive ? calculateDynamicThreshold(team.territoryCells) : calculateDynamicThreshold(team.maxTerritoryCells);
-                
-                let html = `
-                    <div class="team-header">
-                        <div class="team-color" style="background-color: ${team.color}"></div>
-                        <div class="team-name">${team.name}</div>
-                    </div>
-                    <div style="font-size: 12px; color: ${team.alive ? '#4CAF50' : '#f44336'}">
-                        ${team.alive ? '✓ Activo' : '✗ Eliminado'}
-                    </div>
-                    <div class="team-stats">
-                        ${territoryDisplay} | 💀 Muertes: ${team.killCount}
-                    </div>
-                    <div class="threshold-info">
-                        🛡️ Umbral actual: ${currentThreshold} celdas
-                    </div>
-                    ${team.selfErasedCounter > 0 && team.alive ? `
-                    <div class="territory-info" style="color: #4CAF50;">
-                        💚 Auto-curación: ${team.selfErasedCounter}/10 (${Math.floor((team.selfErasedCounter / 10) * 100)}%)
-                    </div>
-                    ` : ''}
-                    ${team.territoriesConquered > 0 ? `
-                    <div class="team-stats" style="color: #ffd700;">
-                        👑 Territorios conquistados: ${team.territoriesConquered}
-                    </div>
-                    ` : ''}
-                    ${team.territoryLostToEnemies > 0 ? `
-                    <div class="team-stats" style="color: #f44336;">
-                        ⚔️ Perdido por conquista: ${team.territoryLostToEnemies} celdas
-                    </div>
-                    ` : ''}
-                    ${team.isFading && team.territoryCells > 0 && GAME_MODE === 'classic' ? `
-                    <div class="fading-info">
-                        💨 Desvaneciéndose... (${team.territoryCells} restantes)
-                    </div>
-                    ` : ''}
-                    ${team.territoryLostCounter > 0 && team.alive ? `
-                    <div class="defense-meter ${team.underAttack ? 'under-attack' : ''}">
-                        🛡️ Bajo ataque: ${team.territoryLostCounter}/${currentThreshold} (${Math.floor((team.territoryLostCounter / currentThreshold) * 100)}%)
-                    </div>
-                    ` : ''}
-                `;
-
-                teamAnts.forEach((ant, index) => {
-                    const healthPercent = (ant.health / MAX_HEALTH) * 100;
-                    let healthClass = '';
-                    if (healthPercent <= 30) healthClass = 'critical';
-                    else if (healthPercent <= 60) healthClass = 'low';
-
-                    html += `
-                        <div class="ant-status">
-                            <span>Hormiga ${index + 1}:</span>
-                            <span>${ant.alive ? `❤️ ${ant.health}/${MAX_HEALTH}` : '💀 Muerta'}</span>
-                        </div>
-                        <div class="health-bar">
-                            <div class="health-fill ${healthClass}" style="width: ${ant.alive ? healthPercent : 0}%"></div>
-                        </div>
-                        ${ant.alive ? `
-                        <div class="territory-info">
-                            ⚔️ Conquistadas: ${ant.cellsConquered}
-                        </div>
-                        ` : ''}
-                    `;
-                });
-
-                card.innerHTML = html;
-                teamListDiv.appendChild(card);
-            });
-        }
-
-        function init() {
-            grid = createEmptyGrid();
-            createTeamsAndAnts();
-            steps = 0;
-            battleEnded = false;
-            winnerAnnouncementDiv.style.display = 'none';
-            deathNotification.classList.remove('show');
-            conquestNotification.classList.remove('show');
-            updateTerritoryCounts();
-            draw();
-            updateStats();
-            updateTeamList();
-            updateStatsPanels();
-            updateModeDescription();
-        }
-
-        function draw() {
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            for (let y = 0; y < GRID_HEIGHT; y++) {
-                for (let x = 0; x < GRID_WIDTH; x++) {
-                    const cellValue = grid[y][x];
-                    if (cellValue > 0) {
-                        const team = teams[cellValue - 1];
-                        
-                        if (!team.alive && team.isFading && GAME_MODE === 'classic') {
-                            ctx.globalAlpha = 0.5;
-                        }
-                        
-                        ctx.fillStyle = TEAM_COLORS[cellValue - 1];
-                        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                        
-                        ctx.globalAlpha = 1.0;
-                    }
-                }
-            }
-
-            ants.filter(ant => ant.alive).forEach(ant => {
-                ctx.fillStyle = ant.color;
-                ctx.strokeStyle = '#000000';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.arc(
-                    ant.x * CELL_SIZE + CELL_SIZE / 2,
-                    ant.y * CELL_SIZE + CELL_SIZE / 2,
-                    CELL_SIZE * 0.8,
-                    0,
-                    Math.PI * 2
-                );
-                ctx.fill();
-                ctx.stroke();
-
-                const healthPercent = ant.health / MAX_HEALTH;
-                ctx.strokeStyle = healthPercent > 0.6 ? '#4CAF50' : healthPercent > 0.3 ? '#ff9800' : '#f44336';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.arc(
-                    ant.x * CELL_SIZE + CELL_SIZE / 2,
-                    ant.y * CELL_SIZE + CELL_SIZE / 2,
-                    CELL_SIZE * 1.2,
-                    0,
-                    Math.PI * 2
-                );
-                ctx.stroke();
-
-                const team = teams[ant.teamId - 1];
-                if (team.underAttack) {
-                    ctx.strokeStyle = 'rgba(255, 0, 0, 0.6)';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.arc(
-                        ant.x * CELL_SIZE + CELL_SIZE / 2,
-                        ant.y * CELL_SIZE + CELL_SIZE / 2,
-                        CELL_SIZE * 1.6,
-                        0,
-                        Math.PI * 2
-                    );
-                    ctx.stroke();
-                }
-            });
-        }
-
-        function updateAnt(ant) {
-            if (!ant.alive) return;
-
-            const currentCell = grid[ant.y][ant.x];
-
-            if (currentCell === 0) {
-                ant.direction = (ant.direction + 1) % 4;
-                grid[ant.y][ant.x] = ant.teamId;
-            } else {
-                ant.direction = (ant.direction + 3) % 4;
-                
-                if (currentCell === ant.teamId) {
-                    const myTeam = teams[ant.teamId - 1];
-                    myTeam.selfErasedCounter++;
-                    
-                    if (myTeam.selfErasedCounter >= HEALING_THRESHOLD) {
-                        myTeam.selfErasedCounter = 0;
-                        
-                        if (myTeam.territoryLostCounter > 0) {
-                            myTeam.territoryLostCounter = Math.max(0, myTeam.territoryLostCounter - 1);
-                        }
-                    }
-                }
-                else if (currentCell !== ant.teamId) {
-                    const enemyTeam = teams[currentCell - 1];
-                    const attackerTeam = teams[ant.teamId - 1];
-                    
-                    if (enemyTeam.alive) {
-                        enemyTeam.territoryLostCounter++;
-                        enemyTeam.totalTerritoryLost++;
-                        enemyTeam.territoryLostToEnemies++;
-                        enemyTeam.underAttack = true;
-                        
-                        ant.cellsConquered++;
-
-                        const dynamicThreshold = calculateDynamicThreshold(enemyTeam.territoryCells);
-
-                        if (enemyTeam.territoryLostCounter >= dynamicThreshold) {
-                            enemyTeam.territoryLostCounter = 0;
-                            
-                            const aliveAnts = ants.filter(a => a.teamId === enemyTeam.id && a.alive);
-                            if (aliveAnts.length > 0) {
-                                const targetAnt = aliveAnts[Math.floor(Math.random() * aliveAnts.length)];
-                                
-                                targetAnt.lastAttacker = attackerTeam.id;
-                                targetAnt.health--;
-
-                                if (targetAnt.health <= 0) {
-                                    targetAnt.alive = false;
-                                    targetAnt.health = 0;
-                                    
-                                    attackerTeam.killCount++;
-                                    
-                                    showDeathNotification(enemyTeam, attackerTeam);
-                                    
-                                    enemyTeam.antsAlive--;
-                                    
-                                    if (enemyTeam.antsAlive <= 0) {
-                                        enemyTeam.alive = false;
-                                        if (enemyTeam.territoryCells > enemyTeam.maxTerritoryCells) {
-                                            enemyTeam.maxTerritoryCells = enemyTeam.territoryCells;
-                                        }
-                                        
-                                        if (GAME_MODE === 'conquest') {
-                                            const cellsConverted = convertEnemyTerritory(enemyTeam.id, attackerTeam.id);
-                                            attackerTeam.territoriesConquered++;
-                                            updateTerritoryCounts();
-                                            showConquestNotification(attackerTeam, enemyTeam, cellsConverted);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                grid[ant.y][ant.x] = 0;
-            }
-
-            const dir = DIRECTIONS[ant.direction];
-            ant.x = (ant.x + dir.dx + GRID_WIDTH) % GRID_WIDTH;
-            ant.y = (ant.y + dir.dy + GRID_HEIGHT) % GRID_HEIGHT;
-        }
-
         function checkWinner() {
             const aliveTeams = teams.filter(t => t.alive);
+            
             if (aliveTeams.length === 1 && !battleEnded) {
                 battleEnded = true;
                 const winner = aliveTeams[0];
-                
                 winnerAnnouncementDiv.textContent = `🏆 ¡${winner.name} GANAN! 🏆`;
                 winnerAnnouncementDiv.style.display = 'block';
+                
                 setTimeout(() => {
                     stopSimulation();
                 }, 2000);
@@ -1261,6 +1451,7 @@
                 battleEnded = true;
                 winnerAnnouncementDiv.textContent = `💀 ¡EMPATE MORTAL! 💀`;
                 winnerAnnouncementDiv.style.display = 'block';
+                
                 setTimeout(() => {
                     stopSimulation();
                 }, 2000);
@@ -1268,15 +1459,23 @@
         }
 
         function step() {
+            // Resetear estado de ataque
             teams.forEach(team => team.underAttack = false);
             
-            ants.forEach(ant => updateAnt(ant));
+            // Coordinar equipos (solo en situaciones críticas)
+            teams.filter(t => t.alive).forEach(team => coordinateTeam(team));
+            
+            // Actualizar hormigas con IA orgánica
+            ants.forEach(ant => updateAntIntelligent(ant));
+            
             steps++;
             
+            // Desvanecer territorio muerto
             if (steps % FADE_INTERVAL === 0) {
                 fadeDeadTerritory();
             }
             
+            // Actualizar contadores de territorio
             if (steps % 10 === 0) {
                 updateTerritoryCounts();
             }
@@ -1300,13 +1499,28 @@
             statsDisplay.textContent = `Pasos: ${steps} | Equipos vivos: ${aliveTeams} | Hormigas vivas: ${aliveAnts}`;
         }
 
+        function init() {
+            grid = createEmptyGrid();
+            createTeamsAndAnts();
+            steps = 0;
+            battleEnded = false;
+            winnerAnnouncementDiv.style.display = 'none';
+            deathNotification.classList.remove('show');
+            conquestNotification.classList.remove('show');
+            updateTerritoryCounts();
+            draw();
+            updateStats();
+            updateTeamList();
+            updateStatsPanels();
+            updateModeDescription();
+        }
+
         function startSimulation() {
             if (!isRunning && !battleEnded) {
                 isRunning = true;
                 startBtn.disabled = true;
                 stopBtn.disabled = false;
                 resetBtn.disabled = true;
-                
                 modeClassicDiv.style.pointerEvents = 'none';
                 modeConquestDiv.style.pointerEvents = 'none';
                 modeClassicDiv.style.opacity = '0.6';
@@ -1323,12 +1537,10 @@
                 startBtn.disabled = false;
                 stopBtn.disabled = true;
                 resetBtn.disabled = false;
-                
                 modeClassicDiv.style.pointerEvents = 'auto';
                 modeConquestDiv.style.pointerEvents = 'auto';
                 modeClassicDiv.style.opacity = '1';
                 modeConquestDiv.style.opacity = '1';
-                
                 clearInterval(intervalId);
             }
         }
@@ -1338,7 +1550,17 @@
             init();
         }
 
-        // Event listeners
+        function updateModeDescription() {
+            if (GAME_MODE === 'classic') {
+                modeSpecificRule.textContent = 'MODO CLÁSICO:';
+                modeSpecificText.textContent = 'El territorio de equipos eliminados se desvanece gradualmente';
+            } else {
+                modeSpecificRule.textContent = 'MODO CONQUISTA TOTAL:';
+                modeSpecificText.textContent = 'Al eliminar un equipo, conquistas todo su territorio instantáneamente';
+            }
+        }
+
+        // ==================== EVENT LISTENERS ====================
         startBtn.addEventListener('click', startSimulation);
         stopBtn.addEventListener('click', stopSimulation);
         resetBtn.addEventListener('click', reset);
@@ -1364,12 +1586,40 @@
             thresholdDisplay.textContent = BASE_DAMAGE_THRESHOLD;
         });
 
+        chaosSlider.addEventListener('input', (e) => {
+            CHAOS_FACTOR = parseInt(e.target.value);
+            chaosValue.textContent = CHAOS_FACTOR;
+            chaosDisplay.textContent = CHAOS_FACTOR;
+        });
+
         fadeSpeedSlider.addEventListener('input', (e) => {
             FADE_SPEED = parseInt(e.target.value);
             fadeSpeedValue.textContent = FADE_SPEED;
         });
 
-        // Inicializar
+        modeClassicDiv.addEventListener('click', () => {
+            if (!isRunning) {
+                GAME_MODE = 'classic';
+                modeClassicDiv.classList.add('selected');
+                modeConquestDiv.classList.remove('selected');
+                modeClassicDiv.querySelector('input').checked = true;
+                fadeSpeedControl.style.display = 'flex';
+                updateModeDescription();
+            }
+        });
+
+        modeConquestDiv.addEventListener('click', () => {
+            if (!isRunning) {
+                GAME_MODE = 'conquest';
+                modeConquestDiv.classList.add('selected');
+                modeClassicDiv.classList.remove('selected');
+                modeConquestDiv.querySelector('input').checked = true;
+                fadeSpeedControl.style.display = 'none';
+                updateModeDescription();
+            }
+        });
+
+        // ==================== INICIALIZACIÓN ====================
         initCanvas();
         init();
     </script>
