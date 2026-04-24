@@ -5,500 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hormiga de Langton - Batalla Final IA Orgánica</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
-            margin: 0;
-            min-height: 100vh;
-        }
-        h1 {
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            font-size: 32px;
-        }
-        .subtitle {
-            font-size: 18px;
-            color: #ffd700;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        #modeSelector {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 15px;
-            background: rgba(0,0,0,0.4);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #ffd700;
-        }
-        .mode-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        .mode-option:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-        .mode-option.selected {
-            background: rgba(255,215,0,0.3);
-            border-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255,215,0,0.5);
-        }
-        .mode-option input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-        .mode-label {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .mode-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffd700;
-        }
-        .mode-description {
-            font-size: 12px;
-            color: #aaa;
-            line-height: 1.4;
-        }
-        #controls {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            transition: all 0.3s;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        #start {
-            background-color: #4CAF50;
-            color: white;
-        }
-        #start:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-        }
-        #stop {
-            background-color: #f44336;
-            color: white;
-        }
-        #stop:hover {
-            background-color: #da190b;
-            transform: translateY(-2px);
-        }
-        #reset {
-            background-color: #ff9800;
-            color: white;
-        }
-        #reset:hover {
-            background-color: #e68900;
-            transform: translateY(-2px);
-        }
-        button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-            transform: none;
-        }
-        #mainContainer {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            justify-content: center;
-            width: 100%;
-            max-width: 1600px;
-        }
-        .stats-panel {
-            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(30,30,50,0.9) 100%);
-            border: 3px solid #ffd700;
-            border-radius: 15px;
-            padding: 15px;
-            width: 250px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
-            max-height: 600px;
-            overflow-y: auto;
-        }
-        .stats-panel h3 {
-            margin: 0 0 15px 0;
-            text-align: center;
-            color: #ffd700;
-            font-size: 18px;
-            border-bottom: 2px solid rgba(255,215,0,0.3);
-            padding-bottom: 10px;
-        }
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px;
-            margin-bottom: 8px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border-left: 4px solid;
-            transition: all 0.3s;
-        }
-        .stat-item:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateX(5px);
-        }
-        .stat-item.eliminated {
-            opacity: 0.6;
-            background: rgba(255,255,255,0.02);
-        }
-        .stat-rank {
-            font-size: 20px;
-            font-weight: bold;
-            width: 30px;
-            text-align: center;
-        }
-        .stat-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        .stat-name {
-            flex: 1;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .stat-value {
-            font-size: 16px;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-        .stat-value.kills {
-            color: #f44336;
-        }
-        .stat-eliminated-badge {
-            font-size: 10px;
-            color: #f44336;
-            margin-left: 5px;
-        }
-        #canvas-container {
-            border: 4px solid #ffd700;
-            background-color: #fff;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        #canvas {
-            display: block;
-            background-color: white;
-        }
-        #info {
-            margin-top: 20px;
-            text-align: center;
-            max-width: 900px;
-            background-color: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 8px;
-            line-height: 1.6;
-        }
-        #stats {
-            margin-top: 15px;
-            font-size: 20px;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-        label {
-            font-size: 14px;
-            font-weight: bold;
-        }
-        input[type="range"] {
-            width: 150px;
-        }
-        #deathNotification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            transform: scale(0);
-            background: linear-gradient(135deg, rgba(139,0,0,0.95) 0%, rgba(0,0,0,0.98) 100%);
-            border: 3px solid #f44336;
-            border-radius: 12px;
-            padding: 15px 25px;
-            box-shadow: 0 0 40px rgba(244, 67, 54, 0.6);
-            z-index: 200;
-            opacity: 0;
-            transition: all 0.4s;
-            max-width: 350px;
-            text-align: left;
-        }
-        #deathNotification.show {
-            transform: scale(1);
-            opacity: 1;
-        }
-        .death-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #f44336;
-            margin-bottom: 10px;
-            text-shadow: 0 0 8px rgba(244, 67, 54, 0.8);
-        }
-        .death-victim {
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        .death-killer {
-            font-size: 14px;
-            color: #ff9800;
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 2px solid rgba(255,255,255,0.2);
-        }
-        .death-icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        #conquestNotification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            transform: scale(0);
-            background: linear-gradient(135deg, rgba(255,215,0,0.95) 0%, rgba(255,140,0,0.98) 100%);
-            border: 3px solid #ffd700;
-            border-radius: 12px;
-            padding: 20px 30px;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
-            z-index: 250;
-            opacity: 0;
-            transition: all 0.4s;
-            max-width: 400px;
-            text-align: left;
-        }
-        #conquestNotification.show {
-            transform: scale(1);
-            opacity: 1;
-        }
-        .conquest-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 10px;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
-        }
-        .conquest-message {
-            font-size: 16px;
-            color: #000;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .conquest-details {
-            font-size: 14px;
-            color: #333;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 2px solid rgba(0,0,0,0.2);
-        }
-        .conquest-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        #teamList {
-            margin-top: 15px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 10px;
-            max-width: 900px;
-            width: 100%;
-        }
-        .team-card {
-            background-color: rgba(0,0,0,0.3);
-            padding: 10px;
-            border-radius: 8px;
-            border: 3px solid;
-            transition: all 0.3s;
-        }
-        .team-card.eliminated {
-            opacity: 0.3;
-            border-color: #666;
-        }
-        .team-card.fading {
-            opacity: 0.5;
-            border-color: #999;
-        }
-        .team-card.winner {
-            border-color: #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .team-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .team-color {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        .team-name {
-            font-weight: bold;
-            font-size: 16px;
-        }
-        .team-stats {
-            font-size: 12px;
-            color: #aaa;
-            margin-top: 5px;
-        }
-        .ant-status {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-        .health-bar {
-            width: 100%;
-            height: 8px;
-            background-color: rgba(255,255,255,0.2);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 3px;
-        }
-        .health-fill {
-            height: 100%;
-            background-color: #4CAF50;
-            transition: width 0.3s;
-        }
-        .health-fill.low {
-            background-color: #ff9800;
-        }
-        .health-fill.critical {
-            background-color: #f44336;
-        }
-        .defense-meter {
-            font-size: 11px;
-            color: #ff5252;
-            margin-top: 3px;
-            font-weight: bold;
-        }
-        .territory-info {
-            font-size: 11px;
-            color: #4CAF50;
-            margin-top: 3px;
-        }
-        .fading-info {
-            font-size: 11px;
-            color: #ff9800;
-            margin-top: 3px;
-            font-style: italic;
-        }
-        .threshold-info {
-            font-size: 11px;
-            color: #2196F3;
-            margin-top: 3px;
-            font-weight: bold;
-        }
-        .under-attack {
-            animation: blink 0.5s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .rules {
-            margin-top: 10px;
-            font-size: 14px;
-            background-color: rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 5px;
-            text-align: left;
-        }
-        .winner-announcement {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #000;
-            padding: 30px 50px;
-            border-radius: 15px;
-            font-size: 32px;
-            font-weight: bold;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
-            z-index: 1000;
-            display: none;
-            animation: winnerAppear 0.5s;
-        }
-        @keyframes winnerAppear {
-            from {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-            to {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-        .stats-panel::-webkit-scrollbar {
-            width: 6px;
-        }
-        .stats-panel::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-        }
-        .stats-panel::-webkit-scrollbar-thumb {
-            background: rgba(255,215,0,0.5);
-            border-radius: 3px;
-        }
-        .role-badge {
-            display: inline-block;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: bold;
-            margin-left: 5px;
-        }
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; margin: 0; min-height: 100vh; }
+        h1 { margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-size: 32px; }
+        .subtitle { font-size: 18px; color: #ffd700; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        #modeSelector { margin-bottom: 20px; display: flex; gap: 15px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 2px solid #ffd700; }
+        .mode-option { display: flex; align-items: center; gap: 10px; padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 8px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .mode-option:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .mode-option.selected { background: rgba(255,215,0,0.3); border-color: #ffd700; box-shadow: 0 0 15px rgba(255,215,0,0.5); }
+        .mode-option input[type="radio"] { width: 20px; height: 20px; cursor: pointer; }
+        .mode-label { display: flex; flex-direction: column; gap: 5px; }
+        .mode-title { font-size: 16px; font-weight: bold; color: #ffd700; }
+        .mode-description { font-size: 12px; color: #aaa; line-height: 1.4; }
+        #controls { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; border: none; border-radius: 5px; transition: all 0.3s; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        #start { background-color: #4CAF50; color: white; }
+        #start:hover { background-color: #45a049; transform: translateY(-2px); }
+        #stop { background-color: #f44336; color: white; }
+        #stop:hover { background-color: #da190b; transform: translateY(-2px); }
+        #reset { background-color: #ff9800; color: white; }
+        #reset:hover { background-color: #e68900; transform: translateY(-2px); }
+        button:disabled { background-color: #555; cursor: not-allowed; transform: none; }
+        #mainContainer { display: flex; gap: 20px; align-items: flex-start; justify-content: center; width: 100%; max-width: 1600px; }
+        .stats-panel { background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(30,30,50,0.9) 100%); border: 3px solid #ffd700; border-radius: 15px; padding: 15px; width: 250px; box-shadow: 0 8px 32px rgba(0,0,0,0.8); max-height: 600px; overflow-y: auto; }
+        .stats-panel h3 { margin: 0 0 15px 0; text-align: center; color: #ffd700; font-size: 18px; border-bottom: 2px solid rgba(255,215,0,0.3); padding-bottom: 10px; }
+        .stat-item { display: flex; align-items: center; gap: 10px; padding: 8px; margin-bottom: 8px; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid; transition: all 0.3s; }
+        .stat-item:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
+        .stat-item.eliminated { opacity: 0.6; background: rgba(255,255,255,0.02); }
+        .stat-rank { font-size: 20px; font-weight: bold; width: 30px; text-align: center; }
+        .stat-color { width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; }
+        .stat-name { flex: 1; font-weight: bold; font-size: 14px; }
+        .stat-value { font-size: 16px; font-weight: bold; color: #4CAF50; }
+        .stat-value.kills { color: #f44336; }
+        .stat-eliminated-badge { font-size: 10px; color: #f44336; margin-left: 5px; }
+        #canvas-container { border: 4px solid #ffd700; background-color: #fff; box-shadow: 0 8px 16px rgba(0,0,0,0.5); border-radius: 8px; overflow: hidden; }
+        #canvas { display: block; background-color: white; }
+        #info { margin-top: 20px; text-align: center; max-width: 900px; background-color: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; line-height: 1.6; }
+        #stats { margin-top: 15px; font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .control-group { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        label { font-size: 14px; font-weight: bold; }
+        input[type="range"] { width: 150px; }
+        #deathNotification { position: fixed; bottom: 20px; right: 20px; transform: scale(0); background: linear-gradient(135deg, rgba(139,0,0,0.95) 0%, rgba(0,0,0,0.98) 100%); border: 3px solid #f44336; border-radius: 12px; padding: 15px 25px; box-shadow: 0 0 40px rgba(244, 67, 54, 0.6); z-index: 200; opacity: 0; transition: all 0.4s; max-width: 350px; text-align: left; }
+        #deathNotification.show { transform: scale(1); opacity: 1; }
+        .death-title { font-size: 20px; font-weight: bold; color: #f44336; margin-bottom: 10px; text-shadow: 0 0 8px rgba(244, 67, 54, 0.8); }
+        .death-victim { font-size: 16px; color: #fff; margin-bottom: 8px; }
+        .death-killer { font-size: 14px; color: #ff9800; margin-top: 8px; padding-top: 8px; border-top: 2px solid rgba(255,255,255,0.2); }
+        .death-icon { font-size: 28px; margin-bottom: 10px; display: inline-block; margin-right: 10px; }
+        #conquestNotification { position: fixed; bottom: 20px; right: 20px; transform: scale(0); background: linear-gradient(135deg, rgba(255,215,0,0.95) 0%, rgba(255,140,0,0.98) 100%); border: 3px solid #ffd700; border-radius: 12px; padding: 20px 30px; box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); z-index: 250; opacity: 0; transition: all 0.4s; max-width: 400px; text-align: left; }
+        #conquestNotification.show { transform: scale(1); opacity: 1; }
+        .conquest-title { font-size: 22px; font-weight: bold; color: #000; margin-bottom: 10px; text-shadow: 0 0 8px rgba(255, 215, 0, 0.8); }
+        .conquest-message { font-size: 16px; color: #000; margin-bottom: 10px; font-weight: bold; }
+        .conquest-details { font-size: 14px; color: #333; margin-top: 10px; padding-top: 10px; border-top: 2px solid rgba(0,0,0,0.2); }
+        .conquest-icon { font-size: 32px; margin-bottom: 12px; display: inline-block; margin-right: 10px; }
+        #teamList { margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; max-width: 900px; width: 100%; }
+        .team-card { background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 3px solid; transition: all 0.3s; }
+        .team-card.eliminated { opacity: 0.3; border-color: #666; }
+        .team-card.fading { opacity: 0.5; border-color: #999; }
+        .team-card.winner { border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .team-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .team-color { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; }
+        .team-name { font-weight: bold; font-size: 16px; }
+        .team-stats { font-size: 12px; color: #aaa; margin-top: 5px; }
+        .ant-status { display: flex; justify-content: space-between; font-size: 14px; margin-top: 5px; }
+        .health-bar { width: 100%; height: 8px; background-color: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; margin-top: 3px; }
+        .health-fill { height: 100%; background-color: #4CAF50; transition: width 0.3s; }
+        .health-fill.low { background-color: #ff9800; }
+        .health-fill.critical { background-color: #f44336; }
+        .defense-meter { font-size: 11px; color: #ff5252; margin-top: 3px; font-weight: bold; }
+        .territory-info { font-size: 11px; color: #4CAF50; margin-top: 3px; }
+        .fading-info { font-size: 11px; color: #ff9800; margin-top: 3px; font-style: italic; }
+        .threshold-info { font-size: 11px; color: #2196F3; margin-top: 3px; font-weight: bold; }
+        .under-attack { animation: blink 0.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .rules { margin-top: 10px; font-size: 14px; background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 5px; text-align: left; }
+        .winner-announcement { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #000; padding: 30px 50px; border-radius: 15px; font-size: 32px; font-weight: bold; box-shadow: 0 0 50px rgba(255, 215, 0, 0.8); z-index: 1000; display: none; animation: winnerAppear 0.5s; }
+        @keyframes winnerAppear { from { transform: translate(-50%, -50%) scale(0); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+        .stats-panel::-webkit-scrollbar { width: 6px; }
+        .stats-panel::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        .stats-panel::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.5); border-radius: 3px; }
+        .role-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-left: 5px; }
         .role-explorer { background-color: #2196F3; color: white; }
         .role-defender { background-color: #4CAF50; color: white; }
         .role-aggressor { background-color: #f44336; color: white; }
         .role-healer { background-color: #ff9800; color: white; }
-        .chaos-indicator {
-            font-size: 11px;
-            color: #9c27b0;
-            margin-top: 3px;
-            font-style: italic;
-        }
+        .chaos-indicator { font-size: 11px; color: #9c27b0; margin-top: 3px; font-style: italic; }
+        .endgame-indicator { font-size: 11px; color: #ff0000; margin-top: 3px; font-weight: bold; animation: blink 1s infinite; }
     </style>
 </head>
 <body>
@@ -604,20 +195,20 @@
             • Al alcanzar el umbral: una hormiga aleatoria pierde 1 vida (10 vidas máximo)<br>
             • <strong>CURACIÓN:</strong> Borrar 25 celdas propias reduce 1 punto del daño acumulado<br><br>
 
-            <strong>🧠 SISTEMA DE IA ESTRATÉGICA ORGÁNICA (NUEVO):</strong><br>
+            <strong>🧠 SISTEMA DE IA ESTRATÉGICA ORGÁNICA:</strong><br>
             • <strong>COMPORTAMIENTO HÍBRIDO:</strong> Mezcla de Langton clásico + estrategia inteligente<br>
             • <strong>FACTOR DE CAOS:</strong> <span id="chaosDisplay">35</span>% de probabilidad de ignorar estrategia y actuar caóticamente<br>
-            • <strong>ESTRATEGIA SITUACIONAL:</strong> Solo actúan estratégicamente en situaciones críticas:<br>
-            &nbsp;&nbsp;- Vida baja (< 40%)<br>
-            &nbsp;&nbsp;- Equipo bajo ataque severo (> 60% del umbral)<br>
-            &nbsp;&nbsp;- Territorio muy reducido<br>
+            • <strong>ESTRATEGIA SITUACIONAL:</strong> Solo actúan estratégicamente en situaciones críticas<br>
+            • <strong>MODO ENDGAME:</strong> Cuando quedan 3 o menos equipos, las hormigas se vuelven ultra-agresivas<br>
+            &nbsp;&nbsp;- Radio de visión duplicado (10 celdas)<br>
+            &nbsp;&nbsp;- Inercia reducida al 10%<br>
+            &nbsp;&nbsp;- Caos reducido al 15%<br>
+            &nbsp;&nbsp;- Búsqueda activa de enemigos lejanos<br>
             • <strong>ROLES DINÁMICOS:</strong> Las hormigas cambian de rol según la situación:<br>
             &nbsp;&nbsp;🔵 <strong>EXPLORADOR:</strong> Expande territorio en zonas vacías<br>
             &nbsp;&nbsp;🟢 <strong>DEFENSOR:</strong> Protege el centro del territorio propio<br>
             &nbsp;&nbsp;🔴 <strong>AGRESOR:</strong> Busca y ataca territorio enemigo cercano<br>
             &nbsp;&nbsp;🟠 <strong>SANADOR:</strong> Borra territorio propio para curar al equipo<br>
-            • <strong>VISIÓN LIMITADA:</strong> Radio de 3 celdas (comportamiento más orgánico)<br>
-            • <strong>INERCIA DE MOVIMIENTO:</strong> 40% de probabilidad de mantener dirección actual<br>
             • <strong>COORDINACIÓN:</strong> Las 2 hormigas coordinan roles en situaciones críticas<br>
             • <strong>MEMORIA:</strong> Detectan si están atascadas y cambian de dirección<br><br>
 
@@ -644,11 +235,14 @@
         let BASE_DAMAGE_THRESHOLD = 30;
         let FADE_SPEED = 5;
         const FADE_INTERVAL = 20;
-        const TERRITORY_BONUS_FACTOR = 0.01;
+        const TERRITORY_BONUS_FACTOR = 0.015;
         const HEALING_THRESHOLD = 25;
-        const VISION_RADIUS = 5; // Reducido para comportamiento más orgánico
-        let CHAOS_FACTOR = 35; // Nuevo: factor de caos (0-100)
-        const INERTIA_FACTOR = 0.4; // Probabilidad de mantener dirección
+        const VISION_RADIUS = 6;
+        const ENDGAME_VISION_RADIUS = 9; // NUEVO: Radio aumentado en endgame
+        let CHAOS_FACTOR = 10;
+        const INERTIA_FACTOR = 0.3;
+        const ENDGAME_INERTIA_FACTOR = 0.1; // NUEVO: Inercia reducida en endgame
+        const ENDGAME_CHAOS_FACTOR = 15; // NUEVO: Caos reducido en endgame
         let GAME_MODE = 'classic';
 
         // Roles de las hormigas
@@ -729,35 +323,43 @@
 
         // ==================== FUNCIONES DE IA ====================
 
+        // NUEVO: Detectar si estamos en endgame
+        function isEndgame() {
+            const aliveTeams = teams.filter(t => t.alive).length;
+            return aliveTeams <= 3;
+        }
+
         // Calcular umbral dinámico
         function calculateDynamicThreshold(territoryCells) {
             const bonus = Math.floor(territoryCells * TERRITORY_BONUS_FACTOR);
             return BASE_DAMAGE_THRESHOLD + bonus;
         }
 
-        // Determinar si debe usar estrategia (solo en situaciones críticas)
+        // MODIFICADO: Determinar si debe usar estrategia (más agresivo en endgame)
         function shouldUseStrategy(ant, team) {
             const healthPercent = ant.health / MAX_HEALTH;
             const damagePercent = team.territoryLostCounter / calculateDynamicThreshold(team.territoryCells);
-            const avgTerritory = teams.filter(t => t.alive).reduce((sum, t) => sum + t.territoryCells, 0) / 
-                                teams.filter(t => t.alive).length;
             
-            // Solo usar estrategia si:
-            // - La hormiga tiene poca vida (< 40%)
-            // - El equipo está bajo ataque severo (> 60% del umbral)
-            // - El equipo tiene muy poco territorio
-            return healthPercent < 0.6 || 
-                   damagePercent > 0.8;
+            // En endgame, SIEMPRE usar estrategia
+            if (isEndgame()) {
+                return true;
+            }
+            
+            // Fuera de endgame, solo en situaciones críticas
+            return healthPercent < 0.9 || damagePercent > 0.8;
         }
 
-        // Analizar entorno de la hormiga
+        // MODIFICADO: Analizar entorno con radio dinámico
         function analyzeEnvironment(ant) {
             let threats = [];
             let opportunities = [];
             let ownTerritory = [];
             
-            for (let dy = -VISION_RADIUS; dy <= VISION_RADIUS; dy++) {
-                for (let dx = -VISION_RADIUS; dx <= VISION_RADIUS; dx++) {
+            // Radio de visión aumentado en endgame
+            const visionRadius = isEndgame() ? ENDGAME_VISION_RADIUS : VISION_RADIUS;
+            
+            for (let dy = -visionRadius; dy <= visionRadius; dy++) {
+                for (let dx = -visionRadius; dx <= visionRadius; dx++) {
                     const x = (ant.x + dx + GRID_WIDTH) % GRID_WIDTH;
                     const y = (ant.y + dy + GRID_HEIGHT) % GRID_HEIGHT;
                     const cell = grid[y][x];
@@ -779,6 +381,30 @@
             return { threats, opportunities, ownTerritory };
         }
 
+        // NUEVO: Encontrar el centro del territorio enemigo más cercano
+        function findNearestEnemyTerritory(ant) {
+            const aliveEnemies = teams.filter(t => t.alive && t.id !== ant.teamId);
+            
+            if (aliveEnemies.length === 0) return null;
+            
+            let nearestEnemy = null;
+            let minDistance = Infinity;
+            
+            aliveEnemies.forEach(enemy => {
+                const center = calculateTerritoryCenter(enemy);
+                const dx = Math.abs(center.x - ant.x);
+                const dy = Math.abs(center.y - ant.y);
+                const distance = Math.min(dx, GRID_WIDTH - dx) + Math.min(dy, GRID_HEIGHT - dy);
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestEnemy = center;
+                }
+            });
+            
+            return nearestEnemy;
+        }
+
         // Calcular centro del territorio de un equipo
         function calculateTerritoryCenter(team) {
             let sumX = 0, sumY = 0, count = 0;
@@ -797,20 +423,24 @@
             return { x: Math.floor(sumX / count), y: Math.floor(sumY / count) };
         }
 
-        // Asignar rol a una hormiga según el contexto
+        // MODIFICADO: Asignar rol más agresivo en endgame
         function assignRole(ant, team) {
             const healthPercent = ant.health / MAX_HEALTH;
             const damagePercent = team.territoryLostCounter / calculateDynamicThreshold(team.territoryCells);
-            const avgTerritory = teams.filter(t => t.alive).reduce((sum, t) => sum + t.territoryCells, 0) / 
-                                teams.filter(t => t.alive).length;
             
-            // Prioridad 1: Curar si el equipo está muy dañado
+            // En endgame, priorizar agresión
+            if (isEndgame()) {
+                if (damagePercent > 0.85 && team.selfErasedCounter < HEALING_THRESHOLD * 0.8) {
+                    return ANT_ROLES.HEALER;
+                }
+                return ANT_ROLES.AGGRESSOR; // Por defecto: atacar
+            }
+            
+            // Fuera de endgame, comportamiento normal
             if (damagePercent > 0.85 && team.selfErasedCounter < HEALING_THRESHOLD * 0.8) {
                 return ANT_ROLES.HEALER;
             }
             
-            
-            // Por defecto: Atacar
             return ANT_ROLES.AGGRESSOR;
         }
 
@@ -823,41 +453,41 @@
                 const ant2 = teamAnts[1];
                 const damagePercent = team.territoryLostCounter / calculateDynamicThreshold(team.territoryCells);
                 
-                // Solo coordinar en situaciones críticas
-                if (damagePercent > 0.85) {
-                    // Bajo ataque: una cura, otra defiende
+                // En endgame, ambas atacan
+                if (isEndgame()) {
+                    ant1.assignedRole = ANT_ROLES.AGGRESSOR;
+                    ant2.assignedRole = ANT_ROLES.AGGRESSOR;
+                } else if (damagePercent > 0.85) {
                     ant1.assignedRole = ANT_ROLES.HEALER;
                 } else {
-                    // Situación normal: dejar que actúen libremente
                     ant1.assignedRole = null;
                     ant2.assignedRole = null;
                 }
             } else if (teamAnts.length === 1) {
-                // Solo queda una: rol según situación
-                teamAnts[0].assignedRole = null; // Dejar que decida por sí misma
+                teamAnts[0].assignedRole = null;
             }
         }
 
-        // Mover hormiga hacia un objetivo (con inercia)
+        // MODIFICADO: Mover hormiga con inercia dinámica
         function moveTowards(ant, targetX, targetY) {
-            // Inercia: probabilidad de mantener dirección actual
-            if (Math.random() < INERTIA_FACTOR) {
-                return; // No cambiar dirección
+            // Inercia reducida en endgame
+            const currentInertia = isEndgame() ? ENDGAME_INERTIA_FACTOR : INERTIA_FACTOR;
+            
+            if (Math.random() < currentInertia) {
+                return;
             }
             
             const dx = targetX - ant.x;
             const dy = targetY - ant.y;
             
-            // Normalizar diferencias considerando el wrap-around
             const normalizedDx = Math.abs(dx) > GRID_WIDTH / 2 ? -Math.sign(dx) : Math.sign(dx);
             const normalizedDy = Math.abs(dy) > GRID_HEIGHT / 2 ? -Math.sign(dy) : Math.sign(dy);
             
-            // Determinar mejor dirección
             let newDirection;
             if (Math.abs(dx) > Math.abs(dy)) {
-                newDirection = normalizedDx > 0 ? 1 : 3; // Este u Oeste
+                newDirection = normalizedDx > 0 ? 1 : 3;
             } else {
-                newDirection = normalizedDy > 0 ? 2 : 0; // Sur o Norte
+                newDirection = normalizedDy > 0 ? 2 : 0;
             }
             
             ant.preferredDirection = newDirection;
@@ -874,11 +504,9 @@
                     ant.memory.lastPositions.map(p => `${p.x},${p.y}`)
                 );
                 
-                // Detectar si está atascada
                 if (uniquePositions.size < 3) {
                     ant.memory.stuckCounter++;
                     if (ant.memory.stuckCounter > 5) {
-                        // Cambiar dirección aleatoriamente
                         ant.direction = Math.floor(Math.random() * 4);
                         ant.memory.stuckCounter = 0;
                         ant.memory.lastPositions = [];
@@ -889,21 +517,19 @@
             }
         }
 
-        // ==================== ACTUALIZACIÓN INTELIGENTE DE HORMIGA ====================
+        // MODIFICADO: Actualización inteligente con búsqueda activa en endgame
         function updateAntIntelligent(ant) {
             if (!ant.alive) return;
             
             const team = teams[ant.teamId - 1];
             ant.isUsingStrategy = false;
             
-            // Solo aplicar estrategia en situaciones críticas
             if (shouldUseStrategy(ant, team)) {
                 const environment = analyzeEnvironment(ant);
                 const role = ant.assignedRole || assignRole(ant, team);
                 ant.currentRole = role;
                 ant.isUsingStrategy = true;
                 
-                // Aplicar comportamiento estratégico
                 switch(role) {
                     case ANT_ROLES.HEALER:
                         if (environment.ownTerritory.length > 0) {
@@ -915,11 +541,16 @@
                         
                     case ANT_ROLES.AGGRESSOR:
                         if (environment.threats.length > 0) {
+                            // Enemigos cercanos detectados
                             const target = environment.threats
                                 .sort((a, b) => b.priority - a.priority)[0];
                             moveTowards(ant, target.x, target.y);
-                        } else {
-                            ant.role = ANT_ROLES.EXPLORER;
+                        } else if (isEndgame()) {
+                            // NUEVO: En endgame, buscar activamente enemigos lejanos
+                            const enemyCenter = findNearestEnemyTerritory(ant);
+                            if (enemyCenter) {
+                                moveTowards(ant, enemyCenter.x, enemyCenter.y);
+                            }
                         }
                         break;
                         
@@ -937,7 +568,6 @@
                         break;
                 }
             } else {
-                // Comportamiento normal de Langton (caótico)
                 ant.currentRole = null;
                 ant.preferredDirection = undefined;
             }
@@ -946,33 +576,30 @@
             executeHybridMove(ant);
         }
 
-        // Ejecutar movimiento híbrido (Langton + Estrategia + Caos)
+        // MODIFICADO: Movimiento híbrido con caos dinámico
         function executeHybridMove(ant) {
             const currentCell = grid[ant.y][ant.x];
             
+            // Caos reducido en endgame
+            const currentChaos = isEndgame() ? ENDGAME_CHAOS_FACTOR : CHAOS_FACTOR;
+            
             if (currentCell === 0) {
-                // Celda vacía: mezclar estrategia con Langton y caos
                 const randomValue = Math.random() * 100;
                 
-                if (randomValue < CHAOS_FACTOR) {
-                    // Factor de caos: comportamiento completamente aleatorio
+                if (randomValue < currentChaos) {
                     ant.direction = (ant.direction + 1) % 4;
                 } else if (ant.preferredDirection !== undefined && Math.random() < 0.5) {
-                    // 50% usar estrategia (si está disponible)
                     ant.direction = ant.preferredDirection;
                 } else {
-                    // 50% usar Langton clásico
                     ant.direction = (ant.direction + 1) % 4;
                 }
                 
                 ant.preferredDirection = undefined;
                 grid[ant.y][ant.x] = ant.teamId;
             } else {
-                // Celda pintada: SIEMPRE Langton (girar izquierda)
                 ant.direction = (ant.direction + 3) % 4;
                 
                 if (currentCell === ant.teamId) {
-                    // Borrar celda propia
                     const myTeam = teams[ant.teamId - 1];
                     myTeam.selfErasedCounter++;
                     
@@ -983,7 +610,6 @@
                         }
                     }
                 } else if (currentCell !== ant.teamId) {
-                    // Borrar celda enemiga
                     const enemyTeam = teams[currentCell - 1];
                     const attackerTeam = teams[ant.teamId - 1];
                     
@@ -1034,7 +660,6 @@
                 grid[ant.y][ant.x] = 0;
             }
             
-            // Mover hormiga
             const dir = DIRECTIONS[ant.direction];
             ant.x = (ant.x + dir.dx + GRID_WIDTH) % GRID_WIDTH;
             ant.y = (ant.y + dir.dy + GRID_HEIGHT) % GRID_HEIGHT;
@@ -1129,7 +754,6 @@
 
         // ==================== FUNCIONES DE VISUALIZACIÓN ====================
         function updateStatsPanels() {
-            // Panel de territorio
             const territorySorted = [...teams].sort((a, b) => b.maxTerritoryCells - a.maxTerritoryCells);
             territoryStatsDiv.innerHTML = '';
             
@@ -1161,7 +785,6 @@
                 territoryStatsDiv.appendChild(item);
             });
             
-            // Panel de muertes
             const killsSorted = [...teams].sort((a, b) => b.killCount - a.killCount);
             killStatsDiv.innerHTML = '';
             
@@ -1242,6 +865,11 @@
                     <div class="threshold-info">
                         🛡️ Umbral actual: ${currentThreshold} celdas
                     </div>
+                    ${team.alive && isEndgame() ? `
+                        <div class="endgame-indicator">
+                            ⚔️ MODO ENDGAME ACTIVADO
+                        </div>
+                    ` : ''}
                     ${team.selfErasedCounter > 0 && team.alive ? `
                         <div class="territory-info" style="color: #4CAF50;">
                             💚 Auto-curación: ${team.selfErasedCounter}/${HEALING_THRESHOLD} (${Math.floor((team.selfErasedCounter / HEALING_THRESHOLD) * 100)}%)
@@ -1307,7 +935,6 @@
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Dibujar celdas
             for (let y = 0; y < GRID_HEIGHT; y++) {
                 for (let x = 0; x < GRID_WIDTH; x++) {
                     const cellValue = grid[y][x];
@@ -1323,7 +950,6 @@
                 }
             }
             
-            // Dibujar hormigas
             ants.filter(ant => ant.alive).forEach(ant => {
                 ctx.fillStyle = ant.color;
                 ctx.strokeStyle = '#000000';
@@ -1339,7 +965,6 @@
                 ctx.fill();
                 ctx.stroke();
                 
-                // Indicador de salud
                 const healthPercent = ant.health / MAX_HEALTH;
                 ctx.strokeStyle = healthPercent > 0.6 ? '#4CAF50' : 
                                  healthPercent > 0.3 ? '#ff9800' : '#f44336';
@@ -1354,7 +979,6 @@
                 );
                 ctx.stroke();
                 
-                // Indicador de ataque
                 const team = teams[ant.teamId - 1];
                 if (team.underAttack) {
                     ctx.strokeStyle = 'rgba(255, 0, 0, 0.6)';
@@ -1459,23 +1083,16 @@
         }
 
         function step() {
-            // Resetear estado de ataque
             teams.forEach(team => team.underAttack = false);
-            
-            // Coordinar equipos (solo en situaciones críticas)
             teams.filter(t => t.alive).forEach(team => coordinateTeam(team));
-            
-            // Actualizar hormigas con IA orgánica
             ants.forEach(ant => updateAntIntelligent(ant));
             
             steps++;
             
-            // Desvanecer territorio muerto
             if (steps % FADE_INTERVAL === 0) {
                 fadeDeadTerritory();
             }
             
-            // Actualizar contadores de territorio
             if (steps % 10 === 0) {
                 updateTerritoryCounts();
             }
